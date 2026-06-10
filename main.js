@@ -1,1 +1,1 @@
-// Arquivo para código javascript
+const URL = 'https://6a29eb54f59cb8f65f1dcaff.mockapi.io/Materiais'

@@ -7,20 +7,19 @@
     <title>Almoxarifado</title>
 </head>
 <body>
+    <h1>ALMOXARIFADO</h1>
     <div>
-        <input type="text" id="input-nome">
-        <input type="text" id="input-quantidade">
-        <input type="submit" id="btn-cadastrar">
-        
-    </div>
-    <div>
-        <table id="lista-materiais" class="tabela">
-            <tr>
-                <th>Nome</th>
-                <th>Quantidade</th>
-            </tr
 
-        </table>
+        <form action="main.js" method="POST" autocomplete="off">
+            <p><label for="iinput-nome">Nome do Material:</label>
+                <input type="text" id="input-nome">
+                </p>
+            <p><label for="iinput-quantidade">Quantidade:</label>
+                <input type="text" id="input-quantidade">
+                </p>
+            <p><input type="submit" id="btn-cadastrar">
+                </p>
+        </form>        
         
     </div>
 <script src="main.js"></script>

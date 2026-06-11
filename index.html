@@ -10,19 +10,22 @@
     <h1>ALMOXARIFADO</h1>
     <div>
 
-        <form autocomplete="off">
-            <p>
-                <input type="text" id="input-nome">
-                </p>
-            <p>
-                <input type="text" id="input-quantidade">
-                </p>
-            <p>
-                <input type="submit" id="btn-cadastrar">
-                </p>
-        </form>        
-        
-    </div>
+<div class="tabela">
+    <form autocomplete="off">
+        <div class="tabelaGeral">
+            <div class="campo">
+                <label for="input-nome">Nome do material</label>
+                <input type="text" id="input-nome" placeholder="Ex: Seringa">
+            </div>
+            <div class="campo">
+                <label for="input-quantidade">Quantidade</label>
+                <input type="text" id="input-quantidade" placeholder="Ex: 50">
+            </div>
+            <input type="submit" id="btn-cadastrar" value="Cadastrar">
+        </div>
+    </form>
+</div>
+
 
     <table id="lista-materiais">
         <thead>

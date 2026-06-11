@@ -10,19 +10,33 @@
     <h1>ALMOXARIFADO</h1>
     <div>
 
-        <form action="main.js" method="POST" autocomplete="off">
-            <p><label for="iinput-nome">Nome do Material:</label>
+        <form autocomplete="off">
+            <p>
                 <input type="text" id="input-nome">
                 </p>
-            <p><label for="iinput-quantidade">Quantidade:</label>
+            <p>
                 <input type="text" id="input-quantidade">
                 </p>
-            <p><input type="submit" id="btn-cadastrar">
+            <p>
+                <input type="submit" id="btn-cadastrar" class="btn">
                 </p>
         </form>        
         
     </div>
+
+    <table id="lista-materiais">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Quantidade</th>
+            </tr>
+        </thead>
+        <tbody id="tbody-materiais">
+            
+        </tbody>
+    </table>
 <script src="main.js"></script>
+
 </body>
 
 </html>

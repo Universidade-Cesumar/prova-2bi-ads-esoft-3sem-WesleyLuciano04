@@ -41,6 +41,20 @@ async function cadastrarMaterial(nome, quantidade) {
     }
 }
 
+function validarRetirada(estoqueAtual, quantidadeRetirada) {
+    if (!quantidadeRetirada || quantidadeRetirada <= 0) {
+        alert('Informe uma quantidade válida para retirar.');
+        return false;
+    }
+
+    if (quantidadeRetirada > estoqueAtual) {
+        alert('Quantidade a retirar é maior do que o estoque disponível.');
+        return false;
+    }
+
+    return true;
+}
+
 async function baixaEstoque(id, input, tr) {
     const retirada = parseInt(input.value);
 

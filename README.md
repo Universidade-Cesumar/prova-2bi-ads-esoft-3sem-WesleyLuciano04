@@ -11,13 +11,16 @@
  
 ## 📋 Sobre
  
-Aplicação web simples para controle de estoque. Consome uma API REST via **MockAPI** para listar e cadastrar materiais.
+Aplicação web simples para controle de estoque. Consome uma API REST via **MockAPI** para listar e cadastrar materiais. Contando também com funcinalidades de edição de quantidade de estoque, além de exclusão completa de materiais.
  
 ## ✨ Funcionalidades
  
 - 📦 Listar materiais via `GET`
 - ➕ Cadastrar novos itens via `POST`
 - 🔄 Atualização automática da lista após cadastro
+- ➖ Remoção de quantidade personalizavél no estoque `PUT`
+- ❌ Exclusão completa de materiais em estoque `DELETE`
+
 ## 🗂️ Estrutura
  
 ```

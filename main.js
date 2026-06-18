@@ -73,6 +73,29 @@ async function baixaEstoque(id, input, tr) {
     alert('Estoque atualizado.');
 }
 
+async function excluirMaterial(id, tr) {
+    const confirmacao = confirm('Deseja excluir este material?');
+    if (!confirmacao) return;
+
+    const resposta = await fetch(`${URL}/${id}`, {
+        method: 'DELETE'
+    });
+
+    if (resposta.status == 200) {
+        tr.remove();
+    }
+}
+
+tbody.addEventListener('click', (evento) => {
+    const elemento = evento.target;
+    const id = elemento.dataset.id;
+    const tr = elemento.closest('tr');
+
+    if (elemento.classList.contains('btn-excluir')) {
+        excluirMaterial(id, tr);
+    }
+});
+
 form.addEventListener('submit', (evento) => {
     evento.preventDefault();
 
@@ -94,6 +117,7 @@ tbody.addEventListener('click', (evento) => {
         const input = tr.querySelector('input[type="text"]');
         baixaEstoque(id, input, tr);
     }
+
 });
 
 chamarAPI();

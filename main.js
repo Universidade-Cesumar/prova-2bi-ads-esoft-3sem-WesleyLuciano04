@@ -57,20 +57,11 @@ function validarRetirada(estoqueAtual, quantidadeRetirada) {
 
 async function baixaEstoque(id, input, tr) {
     const retirada = parseInt(input.value);
-
-    if (!retirada || retirada <= 0) {
-        alert('Informe uma quantidade válida para retirar.');
-        return;
-    }
-
     const respostaGet = await fetch(`${URL}/${id}`);
     const material = await respostaGet.json();
     const quantidadeAtual = parseInt(material.inputQuantidade);
 
-    if (retirada > quantidadeAtual) {
-        alert('Quantidade a retirar é maior do que o estoque disponível.');
-        return;
-    }
+    if (!validarRetirada(quantidadeAtual, quantidadeRetirada)) return;
 
     const novaQuantidade = quantidadeAtual - retirada;
 

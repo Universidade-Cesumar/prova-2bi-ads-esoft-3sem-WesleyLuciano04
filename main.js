@@ -56,14 +56,14 @@ function validarRetirada(estoqueAtual, quantidadeRetirada) {
 }
 
 async function baixaEstoque(id, input, tr) {
-    const retirada = parseInt(input.value);
+    const quantidadeRetirada = parseInt(input.value);
     const respostaGet = await fetch(`${URL}/${id}`);
     const material = await respostaGet.json();
     const quantidadeAtual = parseInt(material.inputQuantidade);
 
     if (!validarRetirada(quantidadeAtual, quantidadeRetirada)) return;
 
-    const novaQuantidade = quantidadeAtual - retirada;
+    const novaQuantidade = quantidadeAtual - quantidadeRetirada;
 
     const resposta = await fetch(`${URL}/${id}`, {
         method: 'PUT',

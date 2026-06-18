@@ -5,31 +5,31 @@ const form = document.querySelector('form');
 
 async function chamarAPI() {
     const resposta = await fetch(URL);
-    if(resposta.status == 200) {
+    if (resposta.status == 200) {
         const materiais = await resposta.json();
 
         tbody.innerHTML = '';
-       
+
         materiais.forEach(material => {
             const tr = document.createElement('tr');
             tr.innerHTML = `
                 <td>${material.inputNome}</td>
-                <td>${material.inputQuantidade}</td>
-                <td class=edicao-estoque>
-                    <input type="text" id = "input-retirada" placeholder = "Ex: 10"> </input>
-                    <input type="submit" class="btn-baixar" value = "Baixar"></input>
-                    <input type="submit" class="btn-excluir" value = "Excluir"></input>
+                <td class="td-quantidade">${material.inputQuantidade}</td>
+                <td class="edicao-estoque">
+                    <input type="text" id="input-retirada" placeholder="Ex: 10">
+                    <input type="button" class="btn-baixar" value="Baixar" data-id="${material.id}">
+                    <input type="button" class="btn-excluir" value="Excluir" data-id="${material.id}">
                 </td>
             `;
-        tbody.appendChild(tr);
+            tbody.appendChild(tr);
         });
-  }
+    }
 }
 
 async function cadastrarMaterial(nome, quantidade) {
     const resposta = await fetch(URL, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             inputNome: nome,
             inputQuantidade: quantidade
@@ -41,15 +41,15 @@ async function cadastrarMaterial(nome, quantidade) {
     }
 }
 
-async function baixaEstoque(id) {
-    const input = document.querySelector(`#input-retirada-${id}`);
+async function baixaEstoque(id, input, tr) {
     const retirada = parseInt(input.value);
 
-    if(retirada <= 0) {
-        alert('Quantidade em estoque insuficiente para a retirada.');
+    if (!retirada || retirada <= 0) {
+        alert('Informe uma quantidade válida para retirar.');
+        return;
     }
 
-        const respostaGet = await fetch(`${URL}/${id}`);
+    const respostaGet = await fetch(`${URL}/${id}`);
     const material = await respostaGet.json();
     const quantidadeAtual = parseInt(material.inputQuantidade);
 
@@ -67,8 +67,10 @@ async function baixaEstoque(id) {
     });
 
     if (resposta.status == 200) {
-        chamarAPI();
+        tr.querySelector('.td-quantidade').textContent = novaQuantidade;
+        input.value = '';
     }
+    alert('Estoque atualizado.');
 }
 
 form.addEventListener('submit', (evento) => {
@@ -83,15 +85,15 @@ form.addEventListener('submit', (evento) => {
     }
 });
 
-tbody.addEventListener('submit', (evento) => {
+tbody.addEventListener('click', (evento) => {
     const elemento = evento.target;
     const id = elemento.dataset.id;
 
     if (elemento.classList.contains('btn-baixar')) {
-        baixarEstoque(id);
+        const tr = elemento.closest('tr');
+        const input = tr.querySelector('input[type="text"]');
+        baixaEstoque(id, input, tr);
     }
 });
-
-
 
 chamarAPI();

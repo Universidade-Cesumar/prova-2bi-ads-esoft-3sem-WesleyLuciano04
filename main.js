@@ -10,19 +10,27 @@ async function chamarAPI() {
 
         tbody.innerHTML = '';
 
-        materiais.forEach(material => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `
-                <td>${material.inputNome}</td>
-                <td class="td-quantidade">${material.inputQuantidade}</td>
-                <td class="edicao-estoque">
-                    <input type="text" id="input-retirada" placeholder="Ex: 10">
-                    <input type="button" class="btn-baixar" value="Baixar" data-id="${material.id}">
-                    <input type="button" class="btn-excluir" value="Excluir" data-id="${material.id}">
-                </td>
-            `;
-            tbody.appendChild(tr);
-        });
+materiais.forEach(material => {
+    const tr = document.createElement('tr');
+
+    if (parseInt(material.inputQuantidade) < 10) {
+        tr.classList.add('estoque-critico');
+    }
+
+    tr.innerHTML = `
+        <td>${material.inputNome}</td>
+        <td class="td-quantidade">${material.inputQuantidade}</td>
+        <td class="edicao-estoque">
+            <input type="text" id="input-retirada" placeholder="Ex: 10">
+            <input type="button" class="btn-baixar" value="Baixar" data-id="${material.id}">
+            <input type="button" class="btn-excluir" value="Excluir" data-id="${material.id}">
+        </td>
+    `;
+    tbody.appendChild(tr);
+});
+
+const totalItens = document.querySelector('#total-itens');
+totalItens.textContent = materiais.length;
     }
 }
 
@@ -71,9 +79,14 @@ async function baixaEstoque(id, input, tr) {
         body: JSON.stringify({ inputQuantidade: novaQuantidade })
     });
 
-    if (resposta.status == 200) {
-        tr.querySelector('.td-quantidade').textContent = novaQuantidade;
-        input.value = '';
+        if (resposta.status == 200) {
+            tr.querySelector('.td-quantidade').textContent = novaQuantidade;
+            input.value = '';
+        if (novaQuantidade < 10) {
+            tr.classList.add('estoque-critico');
+        } else {
+            tr.classList.remove('estoque-critico');
+        }
     }
     alert('Estoque atualizado.');
 }
@@ -88,6 +101,9 @@ async function excluirMaterial(id, tr) {
 
     if (resposta.status == 200) {
         tr.remove();
+
+        const totalItens = document.querySelector('#total-itens');
+        totalItens.textContent = parseInt(totalItens.textContent) - 1;
     }
 }
 
